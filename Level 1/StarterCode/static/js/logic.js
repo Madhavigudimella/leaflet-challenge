@@ -48,13 +48,13 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
    // Add circles to the map.
    L.circle(newList[0].location[j], {
     
-    fillColor: magnitude(newList[0].magnitude[j]),
+    fillColor: cdepth(newList[0].Depth[j]),
     color: "#000",
     weight: 0.3,
     opacity: 0.5,
-    fillOpacity: 1,
+    fillOpacity: 10,
      // Adjust the radius.
-     radius: (newList[0].Depth[j])*1000
+     radius: (newList[0].magnitude[j])*50000
      }).bindPopup(`<h1>${newList[0].place[j]}</h1> <h2>Magnitude: ${newList[0].magnitude[j]}</br> Depth: ${newList[0].Depth[j]}<hr>`).addTo(myMap);
 
      
@@ -64,24 +64,24 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   var legend = L.control({ position: "bottomright" });
   legend.onAdd = function() {
       var div = L.DomUtil.create("div", "info legend");
-      var magnitudes = [0, 1, 2, 3, 4, 5];
+      var depths = [-10, 10, 30, 70, 90];
       var labels = [];
-      var legendInfo = "<h5>Magnitude</h5>";
+      var legendInfo = "<h5>Depth</h5>";
 
       div.innerHTML = legendInfo;
 
       // go through each magnitude item to label and color the legend
       // push to labels array as list item
-      var magReturn = [];
-      var magInput = [];
-      for (var i = 0; i < magnitudes.length; i++) {
+      var depReturn = [];
+      var depInput = [];
+      for (var i = 0; i < depths.length; i++) {
         
-        magReturn.push(magnitude([magnitudes[i]+1]));
-        magInput.push(magnitudes[i]+1);
+        depReturn.push(cdepth([depths[i]+1]));
+        depInput.push(cdepth[i]+1);
 
-          labels.push('<li style="background-color:' + magReturn[i]+ '"> <span>' + magnitudes[i] + (magInput ? '&ndash;' + magnitudes[i + 1] + '' : '+') + '</span></li>');
-          console.log("test", magReturn);
-          console.log("input", magInput);
+          labels.push('<li style="background-color:' + depReturn[i]+ '"> <span>' + depths[i] + (depInput ? '&ndash;' + depths[i + 1] + '' : '+') + '</span></li>');
+          console.log("test", depReturn);
+          console.log("input", depInput);
           
       }
 
@@ -94,20 +94,20 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
   // Adding legend to the map
   legend.addTo(myMap);
 
-function magnitude(sample) {
+function cdepth(sample) {
 
 console.log("Sample", sample[0]);
 
 
-if (sample[0] <= 1) {
-  return  "#F9A602";
-} else if (sample[0] <= 2) {
+if (sample[0] <10) {
+  return  "#896FDF";
+} else if (sample[0] <= 30) {
   return "#ED2939";
-} else if (sample[0] <= 3) {
+} else if (sample[0] <= 50) {
 return  "#FFF200";
-} else if (sample[0] <= 4) {
-return  "#896FDF";
-} else if (sample[0] <= 5) {
+} else if (sample[0] <= 70) {
+return  "#F9A602";
+} else if (sample[0] <= 90) {
 return  "#98FB98";
 } else {
 return "#0018F9";
