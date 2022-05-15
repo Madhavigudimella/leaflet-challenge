@@ -5,7 +5,7 @@ function updateChart(){
   // Create a map object.
 var myMap = L.map("map", {
   center: [37.09, -95.71],
-  zoom: 1.2
+  zoom: 1.5
 });
 
 // Add a tile layer.
@@ -28,7 +28,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
  for (i = 0; i < fullList.length; i++) {
    locTemp = fullList[i].geometry.coordinates;
 
-  locList.push([fullList[i].geometry.coordinates[0], fullList[i].geometry.coordinates[1]]);
+  locList.push([fullList[i].geometry.coordinates[1], fullList[i].geometry.coordinates[0]]);
   placeList.push([fullList[i].properties.place]);
   depthList.push([fullList[i].geometry.coordinates[2]]);
   titleList.push([fullList[i].properties.title]);
@@ -55,7 +55,7 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     fillOpacity: 1,
      // Adjust the radius.
      radius: (newList[0].Depth[j])*1000
-     }).bindPopup(`<h1>${newList[0].place[j]}</h1> <hr>`).addTo(myMap);
+     }).bindPopup(`<h1>${newList[0].place[j]}</h1> <h2>Magnitude: ${newList[0].magnitude[j]}</br> Depth: ${newList[0].Depth[j]}<hr>`).addTo(myMap);
 
      
     }
